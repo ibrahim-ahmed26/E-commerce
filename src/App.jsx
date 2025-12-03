@@ -1,12 +1,12 @@
-import { Route, Routes } from "react-router-dom";
-import Home from "./home/Home";
-import Products from "./products/Products";
-import Cart from "./cart/Cart";
-import FallbackElement from "./FallbackElement";
+
+import { Provider } from "react-redux";
 import AppLayout from "./components/AppLayout";
+import { store } from "./store/store";
 
 export default function App() {
   return (
-    <AppLayout />
+    <Provider store={store}>
+      <AppLayout />
+    </Provider>
   );
 }

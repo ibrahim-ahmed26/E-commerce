@@ -11,7 +11,6 @@ export default function Navigation() {
       <h3 className="md:text-3xl font-bold">Exclusive</h3>
 
       <ul className="flex justify-between items-center gap-4">
-        {/* HOME */}
         <li className="relative group px-2">
           <Link
             to="/"
