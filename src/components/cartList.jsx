@@ -130,7 +130,7 @@ export default function CartList() {
           >
             Clear Cart
           </button>
-          <button className="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 transition-colors duration-300 font-semibold text-lg shadow-md hover:shadow-lg">
+          <button onClick={() => navigate("/checkout")} className="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 transition-colors duration-300 font-semibold text-lg shadow-md hover:shadow-lg">
             Proceed to Checkout
           </button>
         </div>

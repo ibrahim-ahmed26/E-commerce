@@ -1,3 +1,5 @@
+import ErrorGlobal from "./components/ErrorGlobal";
+
 export default function FallbackElement() {
-  return <div>FallbackElement component</div>;
+  return <ErrorGlobal />;
 }

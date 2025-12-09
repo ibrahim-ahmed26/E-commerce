@@ -3,12 +3,13 @@ import { AiOutlineArrowRight, AiOutlineStar } from "react-icons/ai";
 import { BsLightning, BsShield, BsTruck } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../store/slices/productSlice";
-import { addToCart } from "../store/slices/cartSlice";
+import { addToCart, setIsAdding } from "../store/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Loading from "../components/Loading";
 import ErrorFetchingProducts from "../components/ErrorFetchingProducts";
+import toast from "react-hot-toast";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,6 +22,7 @@ export default function Home() {
     status,
     error,
   } = useSelector((state) => state.product);
+  const isAdding = useSelector((state) => state.cart.isAddingProductId)
 
   // Section refs
   const featuresSectionRef = useRef();
@@ -346,10 +348,19 @@ export default function Home() {
                           ${product.price}
                         </p>
                         <button
-                          onClick={() => handleAddToCart(product)}
-                          className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300 text-sm font-medium"
+                          onClick={() => {
+                            dispatch(setIsAdding(product.id));
+                            dispatch(addToCart(product));
+                            setTimeout(() => dispatch(setIsAdding(null)), 500);
+                            toast.success(`Product ${product.id} Added Successfull`)
+                          }}
+                          disabled={isAdding === product.id}
+                          className={`px-6 py-2 rounded-full transition-colors duration-300 font-medium shadow-md ${isAdding === product.id
+                            ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                            : 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg'
+                            }`}
                         >
-                          Add to Cart
+                          {isAdding === product.id ? 'Adding...' : 'Add to Cart'}
                         </button>
                       </div>
                     </div>

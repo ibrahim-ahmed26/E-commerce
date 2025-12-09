@@ -1,16 +1,18 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../store/slices/productSlice";
-import { addToCart } from "../store/slices/cartSlice";
+import { addToCart, setIsAdding } from "../store/slices/cartSlice";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Loading from "./Loading";
 import ErrorFetchingProducts from "./ErrorFetchingProducts";
+import toast from "react-hot-toast";
 
 export default function ProductList() {
   const dispatch = useDispatch();
   const { items, status, error } = useSelector((state) => state.product);
+  const isAdding = useSelector((state) => state.cart.isAddingProductId)
   const cardsRef = useRef([]);
   gsap.registerPlugin(ScrollTrigger);
   useEffect(() => {
@@ -130,10 +132,19 @@ export default function ProductList() {
                     ${product.price}
                   </p>
                   <button
-                    onClick={() => dispatch(addToCart(product))}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300 font-medium shadow-md hover:shadow-lg"
+                    onClick={() => {
+                      dispatch(setIsAdding(product.id));
+                      dispatch(addToCart(product));
+                      setTimeout(() => dispatch(setIsAdding(null)), 500);
+                      toast.success(`Product ${product.id} Added Successfull`)
+                    }}
+                    disabled={isAdding === product.id}
+                    className={`px-6 py-2 rounded-full transition-colors duration-300 font-medium shadow-md ${isAdding === product.id
+                      ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                      : 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg'
+                      }`}
                   >
-                    Add to Cart
+                    {isAdding === product.id ? 'Adding...' : 'Add to Cart'}
                   </button>
                 </div>
               </div>
