@@ -8,12 +8,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Loading from "./Loading";
 import ErrorFetchingProducts from "./ErrorFetchingProducts";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductList() {
   const dispatch = useDispatch();
   const { items, status, error } = useSelector((state) => state.product);
   const isAdding = useSelector((state) => state.cart.isAddingProductId)
   const cardsRef = useRef([]);
+  const navigate = useNavigate()
   gsap.registerPlugin(ScrollTrigger);
   useEffect(() => {
     if (status === "succeeded" && items.length !== 0) {
@@ -90,6 +92,7 @@ export default function ProductList() {
               className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer transform hover:-translate-y-2"
               key={product.id}
               ref={(el) => (cardsRef.current[index] = el)}
+              onClick={() => navigate(`/products/${product.id}`)}
             >
               <div className="relative overflow-hidden bg-gray-100 h-64">
                 <img

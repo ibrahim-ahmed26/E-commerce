@@ -42,17 +42,6 @@ export default function Navigation() {
             <span className="hidden md:block">Cart</span>
           </Link>
         </li>
-
-        {/* SIGN UP */}
-        <li className="relative group px-2">
-          <Link
-            to="/signup"
-            className="before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-0 before:bg-primary before:transition-all group-hover:before:w-full"
-          >
-            <FaUserPlus className="text-xl block md:hidden" />
-            <span className="hidden md:block">Sign Up</span>
-          </Link>
-        </li>
       </ul>
     </div>
   );
