@@ -5,12 +5,12 @@ import { clearCart } from "../store/slices/cartSlice";
 import { toast } from "react-hot-toast";
 import { FiShoppingBag, FiMapPin, FiUser, FiDollarSign } from "react-icons/fi";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
   const { items } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -80,7 +80,9 @@ export default function Checkout() {
           <p className="text-xl text-gray-500 mb-8">
             Order confirmation has been sent to {formData.email}
           </p>
-
+          <button className="w-fit px-2 capitalize bg-primary text-white py-4 rounded-xl" onClick={()=>navigate("/products")}>
+            back to Products
+          </button>
         </div>
       </div >
     );
@@ -97,7 +99,9 @@ export default function Checkout() {
             Your cart is empty
           </h2>
           <p className="text-gray-600 mb-8">Add some products to get started!</p>
-
+            <button className="w-fit px-2 capitalize bg-primary text-white py-4 rounded-xl" onClick={()=>navigate("/products")}>
+            back to Products
+          </button>
         </div>
       </div>
     );
@@ -323,7 +327,6 @@ export default function Checkout() {
                 </div>
               )}
 
-              {/* STEP 2: Review Order */}
               {activeStep === 2 && (
                 <div className="bg-white rounded-2xl shadow-lg p-8 transform transition-all duration-300">
                   <div className="flex items-center gap-3 mb-6">
@@ -402,7 +405,7 @@ export default function Checkout() {
                         {item.title}
                       </p>
                       <p className="text-blue-600 font-semibold">
-                       ${(parseFloat(item.price) * parseInt(item.qty)).toFixed(2)}
+                        ${(parseFloat(item.price) * parseInt(item.qty)).toFixed(2)}
                       </p>
                     </div>
                   </div>
